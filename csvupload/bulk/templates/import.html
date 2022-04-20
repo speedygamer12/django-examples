@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+
+
+        {% if form_errors %}
+
+            {% for field, errors in form_errors.items  %}
+
+                {% for error in errors  %}
+                
+                <li> {{field}}: {{error}} </li>
+
+                {% endfor %}
+            
+            {% endfor %}
+
+        {% elif product_uploads %}
+
+        <p>Succesfully uploaded {{ row_count }} form{{ row_count|pluralize }} 🥳:</p>
+        <u1>
+            {% for product in product_uploads %}
+            <li>{{product}}</li>
+            {% endfor %}
+        </u1>
+        <br/>
+
+        {% endif %}
+
+        <h3>Upload a product</h3>
+
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <br/>
+            <input type="submit" value="Submit" name="submit" />
+        </form>
+        <br />
+
+        <h3>Upload multiple products as csv</h3>
+
+        <form method="post" action="/import/" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form1 }}
+            <br/>
+            <input type="submit" value="Submit" name="submitmultiple" />
+        </form>
+    
+    </body>
+</html>
